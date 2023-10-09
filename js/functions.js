@@ -14,11 +14,34 @@ const isPalindrome = function (text) {
 
 const getDigit = function (text) {
   let newString = '';
-  for(let i = 0; i < text.length; i++) {
+
+  if (!isNaN(text)) {
+    text = text.toString();
+  }
+
+  for (let i = 0; i < text.length; i++) {
     const digit = parseInt(text[i], 10);
-    if(!Number.isNaN(digit)) {
+    if (!Number.isNaN(digit)) {
       newString += digit;
     }
   }
   return newString === '' ? NaN : newString;
 };
+
+checkLength('проверяемая строка', 20);
+checkLength('проверяемая строка', 18);
+checkLength('проверяемая строка', 10);
+
+isPalindrome('топот');
+isPalindrome('ДовОд');
+isPalindrome('Кекс');
+isPalindrome('Лёша на полке клопа нашёл ');
+
+getDigit('2023 год');
+getDigit('ECMAScript 2022');
+getDigit('1 кефир, 0.5 батона');
+getDigit('агент 007');
+getDigit('а я томат');
+getDigit(2023);
+getDigit(-1);
+getDigit(1.5);
