@@ -1,4 +1,4 @@
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -84,7 +84,7 @@ const shuffleArray = function (array) {
 //Получить текст комментария
 const getMessage = function () {
   let messageText = '';
-  const MESSAGE_SHUFFLE = shuffleArray(MESSAGE);
+  const MESSAGE_SHUFFLE = shuffleArray(MESSAGES);
   for (let i = 0; i < getRandomInt(1, 2); i++) {
     if (i) {
       messageText += ' ';
