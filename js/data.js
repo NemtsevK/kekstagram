@@ -1,6 +1,4 @@
-import {getRandomInt} from './util.js';
-import {getArrayRandElement} from './util.js';
-import {shuffleArray} from './util.js';
+import {getRandomInt, getArrayRandElement, shuffleArray} from './util.js';
 
 const MESSAGES = [
   'Всё отлично!',

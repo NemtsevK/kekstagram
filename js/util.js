@@ -20,6 +20,4 @@ const shuffleArray = function (array) {
   return array;
 };
 
-export {getRandomInt};
-export {getArrayRandElement};
-export {shuffleArray};
+export {getRandomInt, getArrayRandElement, shuffleArray};
