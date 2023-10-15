@@ -59,7 +59,7 @@ const stringToDate = function (timeString) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const regExTime = /^([0-2]?[0-9]):([0-5]?[0-9])$/;
-  const regExTimeArr = regExTime.exec(timeString); // ["01:12:33", "01", "12", "33", index: 0, input: "01:12:33", groups: undefined]
+  const regExTimeArr = regExTime.exec(timeString);
   let timeSecond = 0;
   if (regExTimeArr !== null) {
     const timeHour = regExTimeArr[1];
@@ -76,7 +76,7 @@ const checkTimeMeeting = function (startWorking, endWorking, startMeeting, perio
   const startWorkingMs = stringToDate(startWorking);
   const endWorkingMs = stringToDate(endWorking);
   const startMeetingMs = stringToDate(startMeeting);
-  if(periodMeeting < 0) {
+  if (periodMeeting < 0) {
     periodMeeting = 0;
   }
   const endMeetingMs = startMeetingMs + periodMeeting * 60 * 1000;
