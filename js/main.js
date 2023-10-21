@@ -1,3 +1,3 @@
-import {createPhotos} from './data.js';
+import {addPhotosFragment} from './picture.js';
 
-createPhotos(25);
+addPhotosFragment();

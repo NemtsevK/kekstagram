@@ -98,16 +98,16 @@ const createComments = function (number) {
 };
 
 //создать массив фотографий
-const createPhotos = function (number) {
+const createArrayPhotos = function (number) {
   let numberComment = 0;
   const finalArray = [];
-  for (let i = 1; i <= number; i++) {
+  for (let i = 0; i < number; i++) {
     const commentArray = createComments(numberComment);
     numberComment = commentArray.number;
     finalArray[i] = {
       id: i,
-      url: `photos/${i}.jpg`,
-      description: DESCRIPTIONS[i - 1],
+      url: `photos/${(i + 1)}.jpg`,
+      description: DESCRIPTIONS[i],
       likes: getRandomInt(15, 200),
       comments: commentArray.comments,
     };
@@ -115,4 +115,4 @@ const createPhotos = function (number) {
   return finalArray;
 };
 
-export {createPhotos};
+export {createArrayPhotos};
