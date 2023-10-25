@@ -1,4 +1,4 @@
-import {getRandomInt, getArrayRandElement, shuffleArray} from './util.js';
+import {getRandomInt, getArrayRandElement, shuffleArray, createArray} from './util.js';
 
 const MESSAGES = [
   'Всё отлично!',
@@ -101,13 +101,16 @@ const createComments = function (number) {
 const createArrayPhotos = function (number) {
   let numberComment = 0;
   const finalArray = [];
+  const arrayIdPhoto = shuffleArray(createArray(1, number));
+  const arrayLinkPhoto = shuffleArray(createArray(1, number));
+
   for (let i = 0; i < number; i++) {
     const commentArray = createComments(numberComment);
     numberComment = commentArray.number;
     finalArray[i] = {
-      id: i,
-      url: `photos/${(i + 1)}.jpg`,
-      description: DESCRIPTIONS[i],
+      id: arrayIdPhoto[i],
+      url: `photos/${arrayLinkPhoto[i]}.jpg`,
+      description: DESCRIPTIONS[(arrayLinkPhoto[i] - 1)],
       likes: getRandomInt(15, 200),
       comments: commentArray.comments,
     };

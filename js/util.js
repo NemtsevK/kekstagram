@@ -8,6 +8,16 @@ const getArrayRandElement = function (elements) {
   return elements[getRandomInt(0, elements.length - 1)];
 };
 
+const createArray = function (start, end) {
+  const array = [];
+  let count = 0;
+  for(let i = start; i <= end; i++){
+    array[count] = i;
+    count++;
+  }
+  return array;
+};
+
 //перемешать массив (чтобы при выборе случайных элементов не было повторений)
 const shuffleArray = function (array) {
   let j, temp;
@@ -20,4 +30,7 @@ const shuffleArray = function (array) {
   return array;
 };
 
-export {getRandomInt, getArrayRandElement, shuffleArray};
+//если нажата кнопка Esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInt, getArrayRandElement, shuffleArray, createArray, isEscapeKey};

@@ -1,3 +1,5 @@
 import {addPhotosFragment} from './picture.js';
+import {addClickEvent} from './user-modal.js';
 
-addPhotosFragment();
+const userModalOpenElements = addPhotosFragment();
+addClickEvent(userModalOpenElements);

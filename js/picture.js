@@ -26,6 +26,7 @@ arrayPhotos.forEach(({url, description, likes, comments}) => {
 const addPhotosFragment = function () {
   const finalListPhotos = document.querySelector('.pictures');
   finalListPhotos.appendChild(similarListFragment);
+  return finalListPhotos.querySelectorAll('.picture');
 };
 
-export {addPhotosFragment};
+export {arrayPhotos, addPhotosFragment};
