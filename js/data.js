@@ -101,8 +101,7 @@ const createComments = function (number) {
 const createArrayPhotos = function (number) {
   let numberComment = 0;
   const finalArray = [];
-
-  const arrayIdPhoto = shuffleArray(createArray(0, number - 1));
+  const arrayIdPhoto = shuffleArray(createArray(1, number));
   const arrayLinkPhoto = shuffleArray(createArray(1, number));
 
   for (let i = 0; i < number; i++) {
@@ -111,7 +110,7 @@ const createArrayPhotos = function (number) {
     finalArray[i] = {
       id: arrayIdPhoto[i],
       url: `photos/${arrayLinkPhoto[i]}.jpg`,
-      description: DESCRIPTIONS[i],
+      description: DESCRIPTIONS[(arrayLinkPhoto[i] - 1)],
       likes: getRandomInt(15, 200),
       comments: commentArray.comments,
     };

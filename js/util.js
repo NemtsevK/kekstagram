@@ -30,4 +30,7 @@ const shuffleArray = function (array) {
   return array;
 };
 
-export {getRandomInt, getArrayRandElement, shuffleArray, createArray};
+//если нажата кнопка Esc
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInt, getArrayRandElement, shuffleArray, createArray, isEscapeKey};
