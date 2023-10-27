@@ -11,7 +11,7 @@ const getArrayRandElement = function (elements) {
 const createArray = function (start, end) {
   const array = [];
   let count = 0;
-  for(let i = start; i <= end; i++){
+  for (let i = start; i <= end; i++) {
     array[count] = i;
     count++;
   }
