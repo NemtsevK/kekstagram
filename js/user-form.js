@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 import {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength} from './validation.js';
 
 const imageUploadInput = document.querySelector('.img-upload__input');
-const userModalElement = document.querySelector('.img-upload__overlay');
+const modalUploadPhoto = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const buttonModalClose = document.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
@@ -11,7 +11,7 @@ const inputDescription = uploadForm.querySelector('.text__description');
 
 //Добавить изображение
 imageUploadInput.addEventListener('change', () => {
-  userModalElement.classList.remove('hidden');
+  modalUploadPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
 });
 
@@ -25,29 +25,30 @@ const pristine = new Pristine(uploadForm, {
 
 //закрыть модальное окно
 function closeUserModal() {
-  userModalElement.classList.add('hidden');
-  body.classList.remove('modal-open');
-  imageUploadInput.value = '';
-  inputHashtags.value = '';
-  inputDescription.value = '';
-  pristine.reset();
+  if (!modalUploadPhoto.classList.contains('hidden')) {
+    modalUploadPhoto.classList.add('hidden');
+    body.classList.remove('modal-open');
+    imageUploadInput.value = '';
+    inputHashtags.value = '';
+    inputDescription.value = '';
+    pristine.reset();
+  }
 }
 
 //при нажатии Esc закрывается модальное окно
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && document.activeElement !== inputHashtags && document.activeElement !== inputDescription) {
     evt.preventDefault();
     closeUserModal();
   }
 };
 
 //закрыть модальное окно по кнопке Закрыть
-if (buttonModalClose) {
-  buttonModalClose.addEventListener('click', () => {
-    closeUserModal();
-  });
-  document.addEventListener('keydown', onDocumentKeydown);
-}
+buttonModalClose.addEventListener('click', () => {
+  closeUserModal();
+});
+document.addEventListener('keydown', onDocumentKeydown);
+
 
 pristine.addValidator(
   inputHashtags,
