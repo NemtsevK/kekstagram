@@ -1,9 +1,12 @@
 import {isEscapeKey} from './util.js';
 import {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength} from './validation.js';
+import {onScaleSmallerClick, onScaleBiggerClick} from './photo-editing.js';
 
+const body = document.querySelector('body');
 const imageUploadInput = document.querySelector('.img-upload__input');
 const modalUploadPhoto = document.querySelector('.img-upload__overlay');
-const body = document.querySelector('body');
+const buttonScaleSmaller = modalUploadPhoto.querySelector('.scale__control--smaller');
+const buttonScaleBigger = modalUploadPhoto.querySelector('.scale__control--bigger');
 const buttonModalClose = document.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
 const inputHashtags = uploadForm.querySelector('.text__hashtags');
@@ -42,6 +45,10 @@ const onDocumentKeydown = (evt) => {
     closeUserModal();
   }
 };
+
+buttonScaleSmaller.addEventListener('click', onScaleSmallerClick);
+buttonScaleBigger.addEventListener('click', onScaleBiggerClick);
+
 
 //закрыть модальное окно по кнопке Закрыть
 buttonModalClose.addEventListener('click', () => {
