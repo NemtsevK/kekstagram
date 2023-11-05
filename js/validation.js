@@ -1,6 +1,6 @@
 const COUNT_HASHTAGS = 5;
 const MAX_DESCRIPTION = 140;
-const REG_HASHTAG = /^(#(\p{sc=Latin}|\p{sc=Cyrillic}|[0-9]){1,19})?$/iu;
+const REG_HASHTAG = /^(#(?=.*(\p{sc=Latin}|\p{sc=Cyrillic}))(?=.*\d)(\p{sc=Latin}|\p{sc=Cyrillic}|\d){1,19})?$/iu;
 
 
 //проверка каждого хэш-тега на валидность
@@ -17,7 +17,7 @@ function validateHashtags(value) {
 }
 
 //проверка на кол-во слов
-function validateCountWords(value){
+function validateCountWords(value) {
   const hashtagsArray = value.split(' ');
   return hashtagsArray.length <= COUNT_HASHTAGS;
 }
@@ -27,7 +27,7 @@ function validateDuplicateWords(value) {
   const wordCount = {};
   const words = value.split(' ');
   let isValid = true;
-  for(let i = 0; i < words.length; i++){
+  for (let i = 0; i < words.length; i++) {
     const cleanWord = words[i].toLowerCase();
     if (wordCount[cleanWord]) {
       isValid = false;
