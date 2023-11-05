@@ -2,15 +2,15 @@ import {arrayPhotos} from './picture.js';
 import {isEscapeKey} from './util.js';
 
 const body = document.querySelector('body');
-const userModalElement = document.querySelector('.big-picture');
-const picture = userModalElement.querySelector('.big-picture__img > img');
-const userModalCloseElement = userModalElement.querySelector('.big-picture__cancel');
-const commentsList = userModalElement.querySelector('.social__comments');
-const socialCaption = userModalElement.querySelector('.social__caption');
-const likesCount = userModalElement.querySelector('.likes-count');
-const commentsLoader = userModalElement.querySelector('.comments-loader');
-const commentShownCount = userModalElement.querySelector('.social__comment-shown-count');
-const commentTotalCount = userModalElement.querySelector('.social__comment-total-count');
+const modalPhotoBlock = document.querySelector('.big-picture');
+const picture = modalPhotoBlock.querySelector('.big-picture__img > img');
+const buttonModalClose = modalPhotoBlock.querySelector('.big-picture__cancel');
+const commentsList = modalPhotoBlock.querySelector('.social__comments');
+const socialCaption = modalPhotoBlock.querySelector('.social__caption');
+const likesCount = modalPhotoBlock.querySelector('.likes-count');
+const commentsLoader = modalPhotoBlock.querySelector('.comments-loader');
+const commentShownCount = modalPhotoBlock.querySelector('.social__comment-shown-count');
+const commentTotalCount = modalPhotoBlock.querySelector('.social__comment-total-count');
 const COUNT_LOAD_COMMENT = 5;
 
 //каждой ссылке добавляется обработчик на клик
@@ -28,7 +28,7 @@ function openUserModal(photoContent) {
   const commentsArray = photoContent.comments;
   const startCommentIndex = 0;
   const endCommentIndex = startCommentIndex + COUNT_LOAD_COMMENT;
-  userModalElement.classList.remove('hidden');
+  modalPhotoBlock.classList.remove('hidden');
   body.classList.add('modal-open');
   picture.src = photoContent.url;
   picture.alt = photoContent.description;
@@ -67,7 +67,7 @@ function insertComments(startCommentIndex, endCommentIndex, commentsArray) {
 function getStartComment(startCommentIndex, endCommentIndex, commentsArray) {
   let startComments = 0;
   commentsArray.forEach((element, index) => {
-    if(index >= startCommentIndex && index < endCommentIndex){
+    if (index >= startCommentIndex && index < endCommentIndex) {
       createComment(element, index);
       startComments++;
     }
@@ -77,14 +77,14 @@ function getStartComment(startCommentIndex, endCommentIndex, commentsArray) {
 }
 
 //убрать кнопку загрузить ещё
-function closeCommentLoader(){
+function closeCommentLoader() {
   if (!commentsLoader.classList.contains('hidden')) {
     commentsLoader.classList.add('hidden');
   }
 }
 
 //показать кнопку загрузить ещё
-function showCommentLoader(){
+function showCommentLoader() {
   if (commentsLoader.classList.contains('hidden')) {
     commentsLoader.classList.remove('hidden');
   }
@@ -110,8 +110,10 @@ function createComment(element) {
 
 //закрыть модальное окно
 function closeUserModal() {
-  userModalElement.classList.add('hidden');
-  body.classList.remove('modal-open');
+  if (!modalPhotoBlock.classList.contains('hidden')) {
+    modalPhotoBlock.classList.add('hidden');
+    body.classList.remove('modal-open');
+  }
 }
 
 //при нажатии Esc закрывается модальное окно
@@ -122,11 +124,9 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-if (userModalCloseElement) {
-  userModalCloseElement.addEventListener('click', () => {
-    closeUserModal();
-  });
-  document.addEventListener('keydown', onDocumentKeydown);
-}
+buttonModalClose.addEventListener('click', () => {
+  closeUserModal();
+});
+document.addEventListener('keydown', onDocumentKeydown);
 
 export {addClickEvent};
