@@ -27,7 +27,7 @@ const pristine = new Pristine(uploadForm, {
 });
 
 //закрыть модальное окно
-function closeUserModal() {
+const closeUserModal = () => {
   if (!modalUploadPhoto.classList.contains('hidden')) {
     modalUploadPhoto.classList.add('hidden');
     body.classList.remove('modal-open');
@@ -36,7 +36,7 @@ function closeUserModal() {
     inputDescription.value = '';
     pristine.reset();
   }
-}
+};
 
 //при нажатии Esc закрывается модальное окно
 const onDocumentKeydown = (evt) => {
@@ -49,13 +49,11 @@ const onDocumentKeydown = (evt) => {
 buttonScaleSmaller.addEventListener('click', onScaleSmallerClick);
 buttonScaleBigger.addEventListener('click', onScaleBiggerClick);
 
-
 //закрыть модальное окно по кнопке Закрыть
 buttonModalClose.addEventListener('click', () => {
   closeUserModal();
 });
 document.addEventListener('keydown', onDocumentKeydown);
-
 
 pristine.addValidator(
   inputHashtags,

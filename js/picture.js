@@ -23,7 +23,7 @@ arrayPhotos.forEach(({url, description, likes, comments}) => {
 });
 
 //добавление фрагмента в финальный контейнер для фотографий
-const addPhotosFragment = function () {
+const addPhotosFragment = () => {
   const finalListPhotos = document.querySelector('.pictures');
   finalListPhotos.appendChild(similarListFragment);
   return finalListPhotos.querySelectorAll('.picture');

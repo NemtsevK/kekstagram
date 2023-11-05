@@ -1,4 +1,3 @@
-
 const SCALE_MIN = 25;
 const SCALE_MAX = 100;
 
@@ -15,7 +14,7 @@ const getPercentage = (percent, all) => (percent * all) / 100;
 
 const onScaleSmallerClick = () => {
   const result = percentToNumber(valueScale.value) - 25;
-  if(result >= SCALE_MIN) {
+  if (result >= SCALE_MIN) {
     const scaleValue = getPercentage(result, 1);
     imagePreview.style.transform = `scale(${scaleValue})`;
     valueScale.value = numberToPercent(result);
@@ -24,7 +23,7 @@ const onScaleSmallerClick = () => {
 
 const onScaleBiggerClick = () => {
   const result = percentToNumber(valueScale.value) + 25;
-  if(result <= SCALE_MAX) {
+  if (result <= SCALE_MAX) {
     const scaleValue = getPercentage(result, 1);
     imagePreview.style.transform = `scale(${scaleValue})`;
     valueScale.value = numberToPercent(result);
@@ -32,6 +31,3 @@ const onScaleBiggerClick = () => {
 };
 
 export {onScaleSmallerClick, onScaleBiggerClick};
-
-
-

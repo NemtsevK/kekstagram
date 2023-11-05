@@ -62,7 +62,7 @@ const DESCRIPTIONS = [
 ];
 
 //создать текст комментария
-const createMessage = function () {
+const createMessage = () => {
   let messageText = '';
   const MESSAGE_SHUFFLE = shuffleArray(MESSAGES);
   for (let i = 0; i < getRandomInt(1, 2); i++) {
@@ -75,17 +75,15 @@ const createMessage = function () {
 };
 
 //создать комментарий
-const createComment = function (number) {
-  return {
-    id: number,
-    avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
-    message: createMessage(),
-    name: getArrayRandElement(NAMES),
-  };
-};
+const createComment = (number) => ({
+  id: number,
+  avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
+  message: createMessage(),
+  name: getArrayRandElement(NAMES),
+});
 
 //создать массив комментариев
-const createComments = function (number) {
+const createComments = (number) => {
   const countComment = getRandomInt(0, 30);
   const commentArray = [];
   if (countComment) {
@@ -98,7 +96,7 @@ const createComments = function (number) {
 };
 
 //создать массив фотографий
-const createArrayPhotos = function (number) {
+const createArrayPhotos = (number) => {
   let numberComment = 0;
   const finalArray = [];
   const arrayIdPhoto = shuffleArray(createArray(1, number));
