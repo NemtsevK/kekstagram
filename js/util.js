@@ -1,14 +1,10 @@
 //Получить случайное число в диапазоне
-const getRandomInt = function (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 //Получить случайный элемент массива
-const getArrayRandElement = function (elements) {
-  return elements[getRandomInt(0, elements.length - 1)];
-};
+const getArrayRandElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 
-const createArray = function (start, end) {
+const createArray = (start, end) => {
   const array = [];
   let count = 0;
   for (let i = start; i <= end; i++) {
@@ -19,7 +15,7 @@ const createArray = function (start, end) {
 };
 
 //перемешать массив (чтобы при выборе случайных элементов не было повторений)
-const shuffleArray = function (array) {
+const shuffleArray = (array) => {
   let j, temp;
   for (let i = array.length - 1; i > 0; i--) {
     j = Math.floor(Math.random() * (i + 1));
