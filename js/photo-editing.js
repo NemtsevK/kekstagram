@@ -172,6 +172,7 @@ const onChangeRadioEffects = (type) => {
   });
 };
 
+//инициализация эффектов
 const initEffect = () => {
   setVisibleEffectLevel(DEFAULT);
   createSlider(DEFAULT);
@@ -186,4 +187,11 @@ const initEffect = () => {
   });
 };
 
-export {onScaleSmallerClick, onScaleBiggerClick, initEffect};
+//сброс значений
+const resetEffect = () => {
+  updateEffectSlider(DEFAULT);
+  setVisibleEffectLevel(DEFAULT);
+  sliderElement.noUiSlider.destroy();
+};
+
+export {onScaleSmallerClick, onScaleBiggerClick, initEffect, resetEffect};

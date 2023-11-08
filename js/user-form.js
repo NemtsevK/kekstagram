@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength} from './validation.js';
-import {onScaleSmallerClick, onScaleBiggerClick, initEffect} from './photo-editing.js';
+import {onScaleSmallerClick, onScaleBiggerClick, initEffect, resetEffect} from './photo-editing.js';
 
 const body = document.querySelector('body');
 const imageUploadInput = document.querySelector('.img-upload__input');
@@ -16,6 +16,7 @@ const inputDescription = uploadForm.querySelector('.text__description');
 imageUploadInput.addEventListener('change', () => {
   modalUploadPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
+  initEffect();
 });
 
 const pristine = new Pristine(uploadForm, {
@@ -35,6 +36,7 @@ const closeUserModal = () => {
     inputHashtags.value = '';
     inputDescription.value = '';
     pristine.reset();
+    resetEffect();
   }
 };
 
@@ -92,5 +94,3 @@ uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
   }
 });
-
-initEffect();
