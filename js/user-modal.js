@@ -1,4 +1,3 @@
-import {arrayPhotos} from './picture.js';
 import {isEscapeKey} from './util.js';
 
 const body = document.querySelector('body');
@@ -98,11 +97,11 @@ const openUserModal = (photoContent) => {
 };
 
 //каждой ссылке добавляется обработчик на клик
-const addClickEvent = (userModalOpenElements) => {
-  userModalOpenElements.forEach((element, index) => {
+const addClickEvent = (photosContainer, photos) => {
+  photosContainer.forEach((element, index) => {
     element.addEventListener('click', (evt) => {
       evt.preventDefault();
-      openUserModal(arrayPhotos[index]);
+      openUserModal(photos[index]);
     });
   });
 };

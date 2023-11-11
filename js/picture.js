@@ -1,32 +1,28 @@
-import {createArrayPhotos} from './data.js';
-
 //поиск шаблона и блока ссылки внутри него
-const similarPhotoTemplate = document.querySelector('#picture')
-  .content
-  .querySelector('.picture');
+const pictureTemplate = document.querySelector('#picture').content;
+const pictureLink = pictureTemplate.querySelector('.picture');
 
-//создание фрагмента
-const similarListFragment = document.createDocumentFragment();
-
-//формирование массива с фотографиями
-const arrayPhotos = createArrayPhotos(25);
-arrayPhotos.forEach(({url, description, likes, comments}) => {
-  //клонирование блока ссылки из template
-  const photoElement = similarPhotoTemplate.cloneNode(true);
-  //вставка атрибутов в фотографию
-  photoElement.querySelector('.picture__img').src = url;
-  photoElement.querySelector('.picture__img').alt = description;
-  photoElement.querySelector('.picture__likes').textContent = likes;
-  photoElement.querySelector('.picture__comments').textContent = comments.length;
-  //вставка фотографии во фрагмент
-  similarListFragment.appendChild(photoElement);
-});
+//добавление данных во фрагмент
+const setPhotosFragment = (photos) => {
+  const photosFragment = document.createDocumentFragment(); //создание фрагмента
+  photos.forEach(({url, description, likes, comments}) => {
+    const photoElement = pictureLink.cloneNode(true); //клонирование блока ссылки из template
+    //вставка атрибутов в фотографию
+    photoElement.querySelector('.picture__img').src = url;
+    photoElement.querySelector('.picture__img').alt = description;
+    photoElement.querySelector('.picture__likes').textContent = likes;
+    photoElement.querySelector('.picture__comments').textContent = comments.length;
+    photosFragment.appendChild(photoElement); //вставка фотографии во фрагмент
+  });
+  return photosFragment;
+};
 
 //добавление фрагмента в финальный контейнер для фотографий
-const addPhotosFragment = () => {
+const addPhotosFragment = (photos) => {
   const finalListPhotos = document.querySelector('.pictures');
-  finalListPhotos.appendChild(similarListFragment);
+  const photosFragment = setPhotosFragment(photos);
+  finalListPhotos.appendChild(photosFragment);
   return finalListPhotos.querySelectorAll('.picture');
 };
 
-export {arrayPhotos, addPhotosFragment};
+export {addPhotosFragment};
