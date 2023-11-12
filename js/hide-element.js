@@ -1,8 +1,8 @@
 //анимация плавного исчезания элемента
-const fadeIn = (element)=> {
+const fadeIn = (element) => {
   // Применяем начальные стили
   element.style.opacity = '1';
-  element.style.transition = 'opacity 1s ease-in-out';
+  element.style.transition = 'opacity 0.5s ease-in-out';
   // Запускаем анимацию
   requestAnimationFrame(() => {
     element.style.opacity = '0';

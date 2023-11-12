@@ -4,20 +4,19 @@ const TIME_HIDE_ERROR = 5000;
 const body = document.querySelector('body');
 
 //сформировать фрагмент с блоком ошибкой
-const setErrorBlock = (text) => {
+const setErrorBlock = () => {
   const errorTemplate = document.querySelector('#data-error').content;
-  const pictureSection = errorTemplate.querySelector('.data-error');
-  const errorFragment = document.createDocumentFragment(); //создание фрагмента
-  const errorElement = pictureSection.cloneNode(true);
-  errorElement.querySelector('.data-error__title').textContent = text;
+  const errorSection = errorTemplate.querySelector('.data-error');
+  const errorFragment = document.createDocumentFragment();
+  const errorElement = errorSection.cloneNode(true);
   return errorFragment.appendChild(errorElement);
 };
 
 //вставить блок с ошибкой
-const showError = (text) => {
-  const errorBlock = setErrorBlock(text);
+const errorGetData = () => {
+  const errorBlock = setErrorBlock();
   body.appendChild(errorBlock);
   hideElement(errorBlock, TIME_HIDE_ERROR);
 };
 
-export {showError};
+export {errorGetData};

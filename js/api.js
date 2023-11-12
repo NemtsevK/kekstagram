@@ -1,4 +1,5 @@
-import {showError} from './error.js';
+import {errorGetData} from './error-get-data.js';
+import {errorSendData} from './error-send-data.js';
 
 const BASE_URL = 'https://30.javascript.pages.academy/kekstagram';
 const Route = {
@@ -9,13 +10,9 @@ const Method = {
   GET: 'GET',
   POST: 'POST',
 };
-const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
-  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
-};
 
 //взаимодействие с сервером
-const load = (route, errorText = null, method = Method.GET, body = null) =>
+const load = (route, error, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
     .then((response) => {
       if (!response.ok) {
@@ -23,15 +20,12 @@ const load = (route, errorText = null, method = Method.GET, body = null) =>
       }
       return response.json();
     })
-    .catch((err) => {
-      showError(errorText);
-      throw new Error(errorText ?? err.message);
-    });
+    .catch(error);
 
 //получить данные от сервера
-const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
+const getData = () => load(Route.GET_DATA, errorGetData);
 
 //отправить данные на сервер
-const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
+const sendData = (body) => load(Route.SEND_DATA, errorSendData, Method.POST, body);
 
 export {getData, sendData};
