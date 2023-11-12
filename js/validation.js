@@ -6,7 +6,7 @@ const REG_HASHTAG = /^(#(\p{sc=Latin}|\p{sc=Cyrillic}|\d){1,19})?$/iu;
 const validateHashtags = (value) => {
   const words = value.split(' ');
   let isValid = true;
-  for(let i = 0; i < words.length; i++){
+  for (let i = 0; i < words.length; i++) {
     if (!REG_HASHTAG.test(words[i])) {
       isValid = false;
       break;

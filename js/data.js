@@ -96,7 +96,7 @@ const createComments = (number) => {
 };
 
 //создать массив фотографий
-const createArrayPhotos = (number) => {
+const createRandomPhotos = (number) => {
   let numberComment = 0;
   const finalArray = [];
   const arrayIdPhoto = shuffleArray(createArray(1, number));
@@ -116,4 +116,4 @@ const createArrayPhotos = (number) => {
   return finalArray;
 };
 
-export {createArrayPhotos};
+export {createRandomPhotos};

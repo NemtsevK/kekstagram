@@ -1,6 +1,14 @@
 import {addPhotosFragment} from './picture.js';
 import {addClickEvent} from './user-modal.js';
-import './user-form.js';
+import {setPhotoFromSubmit, successPhotoSubmit} from './user-form.js';
+import {getData} from './api.js';
 
-const userModalOpenElements = addPhotosFragment();
-addClickEvent(userModalOpenElements);
+//получить фото от сервера
+getData()
+  .then((photos) => {
+    const photosContainer = addPhotosFragment(photos);
+    addClickEvent(photosContainer, photos);
+  });
+
+//отправить фото на сервер
+setPhotoFromSubmit(successPhotoSubmit);

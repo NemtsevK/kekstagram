@@ -1,6 +1,10 @@
 import {isEscapeKey} from './util.js';
 import {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength} from './validation.js';
-import {onScaleSmallerClick, onScaleBiggerClick, initEffect, resetEffect} from './photo-editing.js';
+import {onScaleSmallerClick, onScaleBiggerClick} from './scale.js';
+import {initEditing, resetEditing} from './photo-editing.js';
+import {sendData} from './api.js';
+import {errorSendData} from './error-send-data.js';
+import {showSuccess} from './success.js';
 
 const body = document.querySelector('body');
 const imageUploadInput = document.querySelector('.img-upload__input');
@@ -11,14 +15,33 @@ const buttonModalClose = document.querySelector('.img-upload__cancel');
 const uploadForm = document.querySelector('.img-upload__form');
 const inputHashtags = uploadForm.querySelector('.text__hashtags');
 const inputDescription = uploadForm.querySelector('.text__description');
+const submitButton = uploadForm.querySelector('.img-upload__submit');
 
-//Добавить изображение
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+//блокировка кнопки опубликовать
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+//разблокировка кнопки опубликовать
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+//нажать кнопку загрузить изображение
 imageUploadInput.addEventListener('change', () => {
   modalUploadPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
-  initEffect();
+  initEditing();
 });
 
+//инициализация библиотеки pristine
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
@@ -27,16 +50,21 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'img-upload__error',
 });
 
+
+const resetFormData = () => {
+  imageUploadInput.value = '';
+  inputHashtags.value = '';
+  inputDescription.value = '';
+  pristine.reset();
+  resetEditing();
+};
+
 //закрыть модальное окно
 const closeUserModal = () => {
   if (!modalUploadPhoto.classList.contains('hidden')) {
     modalUploadPhoto.classList.add('hidden');
     body.classList.remove('modal-open');
-    imageUploadInput.value = '';
-    inputHashtags.value = '';
-    inputDescription.value = '';
-    pristine.reset();
-    resetEffect();
+    resetFormData();
   }
 };
 
@@ -48,13 +76,12 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+//кнопки изменить масштаб
 buttonScaleSmaller.addEventListener('click', onScaleSmallerClick);
 buttonScaleBigger.addEventListener('click', onScaleBiggerClick);
 
 //закрыть модальное окно по кнопке Закрыть
-buttonModalClose.addEventListener('click', () => {
-  closeUserModal();
-});
+buttonModalClose.addEventListener('click', closeUserModal);
 document.addEventListener('keydown', onDocumentKeydown);
 
 pristine.addValidator(
@@ -88,9 +115,29 @@ pristine.addValidator(
   4,
   true);
 
-uploadForm.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (!isValid) {
+//отправить фото и описание на сервер
+const setPhotoFromSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
-});
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then((response) => {
+          if (typeof response !== 'undefined') {
+            onSuccess();
+          }
+        })
+        .catch(errorSendData)
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+//успешная отправка сообщений
+const successPhotoSubmit = () => {
+  closeUserModal();
+  showSuccess();
+};
+
+export {setPhotoFromSubmit, successPhotoSubmit};
