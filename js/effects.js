@@ -163,7 +163,9 @@ const initEffects = () => {
 
 //сброс эффектов
 const resetEffects = () => {
-  effectValue.value = getMaxRange(DEFAULT);
+  const valueEffect = getMaxRange(DEFAULT);
+  effectValue.value = valueEffect;
+  imageElement.style.filter = getStyleimageElement(DEFAULT, valueEffect);
   setVisibleEffectLevel(DEFAULT);
   setEffectRadioButton(DEFAULT);
 };
