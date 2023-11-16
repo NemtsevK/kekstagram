@@ -1,7 +1,19 @@
 //если нажата кнопка Esc
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function debounce (callback, timeoutDelay = 500) {
+//перемешать массив
+const shuffleArray = (array) => {
+  let j, temp;
+  for (let i = array.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = array[j];
+    array[j] = array[i];
+    array[i] = temp;
+  }
+  return array;
+};
+
+function debounce(callback, timeoutDelay = 500) {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -19,7 +31,7 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-function throttle (callback, delayBetweenFrames) {
+function throttle(callback, delayBetweenFrames) {
   // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
   // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
   let lastTime = 0;
@@ -40,4 +52,4 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
-export {isEscapeKey, debounce, throttle};
+export {isEscapeKey, shuffleArray, debounce, throttle};
