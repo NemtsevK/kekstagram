@@ -46,6 +46,6 @@ const validateTextLength = (value) => value.length <= MAX_DESCRIPTION;
 const isValidFormatFile = (file) => {
   const fileName = file.name.toLowerCase();
   return FILE_TYPES.some((it) => fileName.endsWith(it));
-}
+};
 
 export {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength, isValidFormatFile};
