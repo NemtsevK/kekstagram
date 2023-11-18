@@ -77,11 +77,11 @@ const toggleFilterActive = (clickedFilter) => {
 };
 
 //установка события на клик по фильтру
-const setFilterClick = (cd) => {
+const setFilterClick = (cb) => {
   filtersList.forEach((filter) => {
     filter.addEventListener('click', function (event) {
       toggleFilterActive(this);
-      cd(event);
+      cb(event);
     });
   });
 };

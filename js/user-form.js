@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength} from './validation.js';
+import {COUNT_HASHTAGS, MAX_DESCRIPTION, validateCountWords, validateDuplicateWords, validateHashtags, validateTextLength, isValidFormatFile} from './validation.js';
 import {onScaleSmallerClick, onScaleBiggerClick} from './scale.js';
 import {initEditing, resetEditing} from './photo-editing.js';
 import {sendData} from './api.js';
@@ -16,6 +16,10 @@ const uploadForm = document.querySelector('.img-upload__form');
 const inputHashtags = uploadForm.querySelector('.text__hashtags');
 const inputDescription = uploadForm.querySelector('.text__description');
 const submitButton = uploadForm.querySelector('.img-upload__submit');
+const imageElement = uploadForm.querySelector('.img-upload__preview > img');
+const effectsPreview = uploadForm.querySelectorAll('.effects__preview');
+
+let urlPhoto = null;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -35,10 +39,18 @@ const unblockSubmitButton = () => {
 };
 
 //нажать кнопку загрузить изображение
-imageUploadInput.addEventListener('change', () => {
-  modalUploadPhoto.classList.remove('hidden');
-  body.classList.add('modal-open');
-  initEditing();
+imageUploadInput.addEventListener('change', function () {
+  const file = this.files[0];
+  if (file && isValidFormatFile(file)) {
+    urlPhoto = URL.createObjectURL(file);
+    imageElement.src = urlPhoto;
+    effectsPreview.forEach((element) => {
+      element.style.backgroundImage = `url('${urlPhoto}')`;
+    });
+    modalUploadPhoto.classList.remove('hidden');
+    body.classList.add('modal-open');
+    initEditing();
+  }
 });
 
 //инициализация библиотеки pristine
@@ -49,7 +61,6 @@ const pristine = new Pristine(uploadForm, {
   errorTextTag: 'div',
   errorTextClass: 'img-upload__error',
 });
-
 
 const resetFormData = () => {
   imageUploadInput.value = '';
@@ -65,6 +76,7 @@ const closeUserModal = () => {
     modalUploadPhoto.classList.add('hidden');
     body.classList.remove('modal-open');
     resetFormData();
+    URL.revokeObjectURL(urlPhoto);
   }
 };
 

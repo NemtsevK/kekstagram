@@ -8,7 +8,7 @@ const RERENDER_DELAY = 500;
 //получить фото от сервера
 getData()
   .then((photos) => {
-    setPhotosContainer(photos,);
+    setPhotosContainer(photos);
     setFilterClick(debounce(
       (event) => setPhotosContainer(photos, event),
       RERENDER_DELAY,

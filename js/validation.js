@@ -1,6 +1,7 @@
 const COUNT_HASHTAGS = 5;
 const MAX_DESCRIPTION = 140;
 const REG_HASHTAG = /^(#(\p{sc=Latin}|\p{sc=Cyrillic}|\d){1,19})?$/iu;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 //проверка каждого хэш-тега на валидность
 const validateHashtags = (value) => {
@@ -41,4 +42,10 @@ const validateDuplicateWords = (value) => {
 //проверка на длину текста
 const validateTextLength = (value) => value.length <= MAX_DESCRIPTION;
 
-export {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength};
+//проверка на допустипый формат файла
+const isValidFormatFile = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
+export {COUNT_HASHTAGS, MAX_DESCRIPTION, validateHashtags, validateCountWords, validateDuplicateWords, validateTextLength, isValidFormatFile};
