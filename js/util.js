@@ -1,5 +1,5 @@
 //если нажата кнопка Esc
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (event) => event.key === 'Escape';
 
 //перемешать массив
 const shuffleArray = (array) => {
@@ -31,25 +31,4 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-function throttle(callback, delayBetweenFrames) {
-  // Используем замыкания, чтобы время "последнего кадра" навсегда приклеилось
-  // к возвращаемой функции с условием, тогда мы его сможем перезаписывать
-  let lastTime = 0;
-
-  return (...rest) => {
-    // Получаем текущую дату в миллисекундах,
-    // чтобы можно было в дальнейшем
-    // вычислять разницу между кадрами
-    const now = new Date();
-
-    // Если время между кадрами больше задержки,
-    // вызываем наш колбэк и перезаписываем lastTime
-    // временем "последнего кадра"
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-export {isEscapeKey, shuffleArray, debounce, throttle};
+export {isEscapeKey, shuffleArray, debounce};

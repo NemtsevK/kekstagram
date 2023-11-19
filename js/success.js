@@ -19,8 +19,8 @@ const closeSuccessModal = () => {
 };
 
 //событие нажать esc
-const keydownEscSuccess = (evt) => {
-  if (isEscapeKey(evt)) {
+const keydownEscSuccess = (event) => {
+  if (isEscapeKey(event)) {
     closeSuccessModal();
     document.removeEventListener('keydown', keydownEscSuccess);
   }
@@ -32,11 +32,10 @@ const showSuccess = () => {
   body.appendChild(successBlockFragment);
   const successBlock = body.querySelector('.success');
   const successButton = successBlock.querySelector('.success__button');
-
   successButton.addEventListener('click', closeSuccessModal);
 
-  successBlock.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('success')) {
+  successBlock.addEventListener('click', (event) => {
+    if (event.target.classList.contains('success')) {
       closeSuccessModal();
     }
   });

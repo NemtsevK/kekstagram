@@ -7,8 +7,8 @@ const body = document.querySelector('body');
 const setErrorBlock = () => {
   const errorTemplate = document.querySelector('#data-error').content;
   const errorSection = errorTemplate.querySelector('.data-error');
-  const errorFragment = document.createDocumentFragment();
   const errorElement = errorSection.cloneNode(true);
+  const errorFragment = document.createDocumentFragment();
   return errorFragment.appendChild(errorElement);
 };
 

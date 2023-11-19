@@ -10,7 +10,12 @@ const likesCount = modalPhotoBlock.querySelector('.likes-count');
 const commentsLoader = modalPhotoBlock.querySelector('.comments-loader');
 const commentShownCount = modalPhotoBlock.querySelector('.social__comment-shown-count');
 const commentTotalCount = modalPhotoBlock.querySelector('.social__comment-total-count');
+const commentTextInput = modalPhotoBlock.querySelector('.social__footer-text');
+
+const START_COMMENT_INDEX = 0;
 const COUNT_LOAD_COMMENT = 5;
+
+let onCommentsLoaderClick;
 
 //создать и добавить комментарий
 const createComment = (element) => {
@@ -31,16 +36,15 @@ const createComment = (element) => {
 };
 
 //получить кол-во отображаемых комментариев
-const getStartComment = (startCommentIndex, endCommentIndex, commentsArray) => {
+const getStartComment = (comments) => {
   let startComments = 0;
-  commentsArray.forEach((element, index) => {
-    if (index >= startCommentIndex && index < endCommentIndex) {
+  comments.array.forEach((element, index) => {
+    if (index >= comments.start && index < comments.end) {
       createComment(element, index);
       startComments++;
     }
   });
-  startComments += startCommentIndex;
-  return startComments;
+  return startComments + comments.start;
 };
 
 //убрать кнопку загрузить ещё
@@ -58,33 +62,26 @@ const showCommentLoader = () => {
 };
 
 //вставить комментарии
-const insertComments = (startCommentIndex, endCommentIndex, commentsArray) => {
-  const commentCountAll = commentsArray.length;
-  const startComments = getStartComment(startCommentIndex, endCommentIndex, commentsArray);
-  const countCurrentComment = (startComments < endCommentIndex) ? startComments : endCommentIndex;
+const insertComments = (comments) => {
+  const commentCountAll = comments.array.length;
+  const nextStartComments = getStartComment(comments);
+  const countCurrentComment = (nextStartComments < comments.end) ? nextStartComments : comments.end;
   commentTotalCount.textContent = commentCountAll.toString();
   commentShownCount.textContent = countCurrentComment.toString();
-  if (commentCountAll <= endCommentIndex) {
+  if (commentCountAll <= comments.end) {
     closeCommentLoader();
   } else {
     showCommentLoader();
   }
 };
 
-//клик по кнопке загрузить ещё
-const clickMoreComments = (startCommentIndex, endCommentIndex, commentsArray) => {
-  commentsLoader.addEventListener('click', () => {
-    startCommentIndex += COUNT_LOAD_COMMENT;
-    endCommentIndex += COUNT_LOAD_COMMENT;
-    insertComments(startCommentIndex, endCommentIndex, commentsArray);
-  });
-};
-
 //открыть модальное окно
 const openUserModal = (photoContent) => {
-  const commentsArray = photoContent.comments;
-  const startCommentIndex = 0;
-  const endCommentIndex = startCommentIndex + COUNT_LOAD_COMMENT;
+  const comments = {
+    start: START_COMMENT_INDEX,
+    end: COUNT_LOAD_COMMENT,
+    array: photoContent.comments
+  };
   modalPhotoBlock.classList.remove('hidden');
   body.classList.add('modal-open');
   picture.src = photoContent.url;
@@ -92,15 +89,21 @@ const openUserModal = (photoContent) => {
   socialCaption.textContent = photoContent.description;
   likesCount.textContent = photoContent.likes;
   commentsList.innerHTML = '';
-  insertComments(startCommentIndex, endCommentIndex, commentsArray);
-  clickMoreComments(startCommentIndex, endCommentIndex, commentsArray);
+  insertComments(comments);
+
+  onCommentsLoaderClick = () => {
+    comments.start += COUNT_LOAD_COMMENT;
+    comments.end += COUNT_LOAD_COMMENT;
+    insertComments(comments);
+  };
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
 
 //каждой ссылке добавляется обработчик на клик
 const addClickEvent = (photosContainer, photos) => {
   photosContainer.forEach((element, index) => {
-    element.addEventListener('click', (evt) => {
-      evt.preventDefault();
+    element.addEventListener('click', (event) => {
+      event.preventDefault();
       openUserModal(photos[index]);
     });
   });
@@ -108,16 +111,16 @@ const addClickEvent = (photosContainer, photos) => {
 
 //закрыть модальное окно
 const closeUserModal = () => {
-  if (!modalPhotoBlock.classList.contains('hidden')) {
-    modalPhotoBlock.classList.add('hidden');
-    body.classList.remove('modal-open');
-  }
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+  modalPhotoBlock.classList.add('hidden');
+  body.classList.remove('modal-open');
+  commentTextInput.value = '';
 };
 
 //при нажатии Esc закрывается модальное окно
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
+const onDocumentKeydown = (event) => {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
     closeUserModal();
   }
 };

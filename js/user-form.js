@@ -26,16 +26,10 @@ const SubmitButtonText = {
   SENDING: 'Публикую...'
 };
 
-//блокировка кнопки опубликовать
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
-
-//разблокировка кнопки опубликовать
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+//блокировка/разблокировка кнопки опубликовать
+const toggleSubmitButton = (disabled, text) => {
+  submitButton.disabled = disabled;
+  submitButton.textContent = text;
 };
 
 //нажать кнопку загрузить изображение
@@ -81,9 +75,10 @@ const closeUserModal = () => {
 };
 
 //при нажатии Esc закрывается модальное окно
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && document.activeElement !== inputHashtags && document.activeElement !== inputDescription) {
-    evt.preventDefault();
+const onDocumentKeydown = (event) => {
+  const errorModal = document.querySelector('.error');
+  if (isEscapeKey(event) && document.activeElement !== inputHashtags && document.activeElement !== inputDescription && !errorModal) {
+    event.preventDefault();
     closeUserModal();
   }
 };
@@ -129,19 +124,19 @@ pristine.addValidator(
 
 //отправить фото и описание на сервер
 const setPhotoFromSubmit = (onSuccess) => {
-  uploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+  uploadForm.addEventListener('submit', (event) => {
+    event.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
+      toggleSubmitButton(true, SubmitButtonText.SENDING);
+      sendData(new FormData(event.target))
         .then((response) => {
           if (typeof response !== 'undefined') {
             onSuccess();
           }
         })
         .catch(errorSendData)
-        .finally(unblockSubmitButton);
+        .finally(() => toggleSubmitButton(false, SubmitButtonText.IDLE));
     }
   });
 };
