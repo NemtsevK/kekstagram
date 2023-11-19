@@ -82,7 +82,8 @@ const closeUserModal = () => {
 
 //при нажатии Esc закрывается модальное окно
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && document.activeElement !== inputHashtags && document.activeElement !== inputDescription) {
+  const errorModal = document.querySelector('.error');
+  if (isEscapeKey(evt) && document.activeElement !== inputHashtags && document.activeElement !== inputDescription && !errorModal) {
     evt.preventDefault();
     closeUserModal();
   }

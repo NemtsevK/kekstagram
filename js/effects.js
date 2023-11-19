@@ -99,19 +99,21 @@ const createSlider = (type) => {
   const minRange = getMinRange(type);
   const maxRange = getMaxRange(type);
   const stepRange = getStepRange(type);
-  noUiSlider.create(sliderElement, {
-    range: {
-      min: minRange,
-      max: maxRange,
-    },
-    start: maxRange,
-    step: stepRange,
-    connect: 'lower',
-    format: {
-      to: (value) => Number(value),
-      from: (value) => Number(value),
-    },
-  });
+  if(!sliderElement.noUiSlider){
+    noUiSlider.create(sliderElement, {
+      range: {
+        min: minRange,
+        max: maxRange,
+      },
+      start: maxRange,
+      step: stepRange,
+      connect: 'lower',
+      format: {
+        to: (value) => Number(value),
+        from: (value) => Number(value),
+      },
+    });
+  }
 };
 
 //установить параметры слайдера noUiSlider

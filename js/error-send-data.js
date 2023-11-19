@@ -19,10 +19,10 @@ const closeErrorModal = () => {
 };
 
 //событие нажать esc
-const keydownEscError = (evt) => {
+const onEscErrorKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     closeErrorModal();
-    document.removeEventListener('keydown', keydownEscError);
+    document.removeEventListener('keydown', onEscErrorKeydown);
   }
 };
 
@@ -41,7 +41,7 @@ const errorSendData = () => {
     }
   });
 
-  document.addEventListener('keydown', keydownEscError);
+  document.addEventListener('keydown', onEscErrorKeydown);
 };
 
 export {errorSendData};
