@@ -17,7 +17,7 @@ const validateHashtags = (value) => {
   return isValid;
 };
 
-//удалить пробелы в начале и в конце, а также два и более пробелов подряд
+//удалить пробелы в начале и в конце, а также два и более пробелов подряд между словами
 const removeExtraSpaces = (text) => {
   text = text.trim();
   return text.replace(REG_EXTRA_SPACES, ' ');

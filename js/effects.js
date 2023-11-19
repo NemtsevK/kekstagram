@@ -69,7 +69,7 @@ const getStepRange = (type) => {
 
 
 //получить изменённый стиль фото
-const getStyleimageElement = (type, valueEffect) => {
+const getStyleImageElement = (type, valueEffect) => {
   let style;
   switch (type) {
     case 'none':
@@ -99,7 +99,7 @@ const createSlider = (type) => {
   const minRange = getMinRange(type);
   const maxRange = getMaxRange(type);
   const stepRange = getStepRange(type);
-  if(!sliderElement.noUiSlider){
+  if (!sliderElement.noUiSlider) {
     noUiSlider.create(sliderElement, {
       range: {
         min: minRange,
@@ -135,24 +135,25 @@ const setSliderOptions = (type) => {
 const updateEffectSlider = (type) => {
   const valueEffect = sliderElement.noUiSlider.get();
   effectValue.value = valueEffect;
-  imageElement.style.filter = getStyleimageElement(type, valueEffect);
+  imageElement.style.filter = getStyleImageElement(type, valueEffect);
 };
 
 //изменение радио-кнопки
-const onChangeRadioEffects = (type) => {
+const onRadioEffectsChange = (button) => {
+  const type = button.value;
+  const minRange = getMinRange(type);
+  sliderElement.noUiSlider.set(minRange);
   setSliderOptions(type);
   setVisibleEffectLevel(type);
   sliderElement.noUiSlider.off('update');
-  sliderElement.noUiSlider.on('update', () => {
-    updateEffectSlider(type);
-  });
+  sliderElement.noUiSlider.on('update', () => updateEffectSlider(type));
 };
 
 //установка checked конкретной радио кнопке
 const setEffectRadioButton = (type) => {
-  effectRadioButtons.forEach((radioButton) => {
-    if (radioButton.value === type) {
-      radioButton.checked = true;
+  effectRadioButtons.forEach((button) => {
+    if (button.value === type) {
+      button.checked = true;
     }
   });
 };
@@ -167,9 +168,9 @@ const initEffects = () => {
 const resetEffects = () => {
   const valueEffect = getMaxRange(DEFAULT);
   effectValue.value = valueEffect;
-  imageElement.style.filter = getStyleimageElement(DEFAULT, valueEffect);
+  imageElement.style.filter = getStyleImageElement(DEFAULT, valueEffect);
   setVisibleEffectLevel(DEFAULT);
   setEffectRadioButton(DEFAULT);
 };
 
-export {getMinRange, onChangeRadioEffects, initEffects, resetEffects};
+export {getMinRange, onRadioEffectsChange, initEffects, resetEffects};

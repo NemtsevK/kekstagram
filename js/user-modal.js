@@ -102,8 +102,8 @@ const openUserModal = (photoContent) => {
 //каждой ссылке добавляется обработчик на клик
 const addClickEvent = (photosContainer, photos) => {
   photosContainer.forEach((element, index) => {
-    element.addEventListener('click', (evt) => {
-      evt.preventDefault();
+    element.addEventListener('click', (event) => {
+      event.preventDefault();
       openUserModal(photos[index]);
     });
   });
@@ -118,9 +118,9 @@ const closeUserModal = () => {
 };
 
 //при нажатии Esc закрывается модальное окно
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
+const onDocumentKeydown = (event) => {
+  if (isEscapeKey(event)) {
+    event.preventDefault();
     closeUserModal();
   }
 };

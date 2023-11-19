@@ -1,4 +1,4 @@
-import {getMinRange, onChangeRadioEffects, initEffects, resetEffects} from './effects.js';
+import {onRadioEffectsChange, initEffects, resetEffects} from './effects.js';
 import {resetScale} from './scale.js';
 
 const modalElement = document.querySelector('.img-upload__overlay');
@@ -8,13 +8,8 @@ const effectRadioButtons = modalElement.querySelectorAll('.effects__radio');
 //инициализация редактирования эффектов
 const initEditing = () => {
   initEffects();
-  effectRadioButtons.forEach((radioButton) => {
-    radioButton.addEventListener('change', function () {
-      const type = this.value;
-      const minRange = getMinRange(type);
-      sliderElement.noUiSlider.set(minRange);
-      onChangeRadioEffects(type);
-    });
+  effectRadioButtons.forEach((button) => {
+    button.addEventListener('change', () => onRadioEffectsChange(button));
   });
 };
 

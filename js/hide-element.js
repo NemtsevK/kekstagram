@@ -7,16 +7,16 @@ const fadeIn = (element) => {
   requestAnimationFrame(() => {
     element.style.opacity = '0';
   });
-  element.addEventListener('transitionend', () => {
-    element.remove();
-  });
+  element.addEventListener('transitionend', () => element.remove());
 };
 
 //скрыть элемент через время
 const hideElement = (element, time) => {
-  setTimeout(() => {
-    fadeIn(element);
-  }, time);
+  if (element) {
+    setTimeout(() => {
+      fadeIn(element);
+    }, time);
+  }
 };
 
 export {hideElement};

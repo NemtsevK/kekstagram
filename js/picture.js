@@ -1,4 +1,3 @@
-//поиск шаблона и блока ссылки внутри него
 import {addClickEvent} from './user-modal.js';
 import {shuffleArray} from './util.js';
 
@@ -28,9 +27,7 @@ const setPhotosFragment = (photos) => {
 //удалить все фотографии
 const removeAllPhotos = () => {
   const elementsToRemove = finalListPhotos.querySelectorAll('.picture');
-  elementsToRemove.forEach((element) => {
-    element.remove();
-  });
+  elementsToRemove.forEach((element) => element.remove());
 };
 
 //изменить массив с фотографиями
