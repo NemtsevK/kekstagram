@@ -27,12 +27,10 @@ const setVisibleEffectLevel = (type) => {
 //получить минимальное значение у эффекта фото
 const getMinRange = (type) => {
   let minRange;
-  switch (type) {
-    case 'heat':
-      minRange = 1;
-      break;
-    default:
-      minRange = 0;
+  if (type === 'heat') {
+    minRange = 1;
+  } else {
+    minRange = 0;
   }
   return minRange;
 };
@@ -57,12 +55,10 @@ const getMaxRange = (type) => {
 //получить значения шага у эффекта фото
 const getStepRange = (type) => {
   let stepRange;
-  switch (type) {
-    case 'marvin':
-      stepRange = 1;
-      break;
-    default:
-      stepRange = 0.1;
+  if (type === 'marvin') {
+    stepRange = 1;
+  } else {
+    stepRange = 0.1;
   }
   return stepRange;
 };
