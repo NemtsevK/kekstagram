@@ -1,5 +1,8 @@
 import {isEscapeKey} from './util.js';
 
+const START_COMMENT_INDEX = 0;
+const COUNT_LOAD_COMMENT = 5;
+
 const body = document.querySelector('body');
 const modalPhotoBlock = document.querySelector('.big-picture');
 const picture = modalPhotoBlock.querySelector('.big-picture__img > img');
@@ -11,9 +14,6 @@ const commentsLoader = modalPhotoBlock.querySelector('.comments-loader');
 const commentShownCount = modalPhotoBlock.querySelector('.social__comment-shown-count');
 const commentTotalCount = modalPhotoBlock.querySelector('.social__comment-total-count');
 const commentTextInput = modalPhotoBlock.querySelector('.social__footer-text');
-
-const START_COMMENT_INDEX = 0;
-const COUNT_LOAD_COMMENT = 5;
 
 let onCommentsLoaderClick;
 
@@ -38,7 +38,7 @@ const createComment = (element) => {
 //получить кол-во отображаемых комментариев
 const getStartComment = (comments) => {
   let startComments = 0;
-  comments.array.forEach((element, index) => {
+  comments.data.forEach((element, index) => {
     if (index >= comments.start && index < comments.end) {
       createComment(element, index);
       startComments++;
@@ -63,7 +63,7 @@ const showCommentLoader = () => {
 
 //вставить комментарии
 const insertComments = (comments) => {
-  const commentCountAll = comments.array.length;
+  const commentCountAll = comments.data.length;
   const nextStartComments = getStartComment(comments);
   const countCurrentComment = (nextStartComments < comments.end) ? nextStartComments : comments.end;
   commentTotalCount.textContent = commentCountAll.toString();
@@ -80,7 +80,7 @@ const openUserModal = (photoContent) => {
   const comments = {
     start: START_COMMENT_INDEX,
     end: COUNT_LOAD_COMMENT,
-    array: photoContent.comments
+    data: photoContent.comments
   };
   modalPhotoBlock.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -109,6 +109,14 @@ const addClickEvent = (photosContainer, photos) => {
   });
 };
 
+//событие закрыть модальное окно по клику
+const onCloseUserModalClick = () => {
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+  modalPhotoBlock.classList.add('hidden');
+  body.classList.remove('modal-open');
+  commentTextInput.value = '';
+};
+
 //закрыть модальное окно
 const closeUserModal = () => {
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
@@ -125,7 +133,7 @@ const onDocumentKeydown = (event) => {
   }
 };
 
-buttonModalClose.addEventListener('click', closeUserModal);
+buttonModalClose.addEventListener('click', onCloseUserModalClick);
 
 document.addEventListener('keydown', onDocumentKeydown);
 

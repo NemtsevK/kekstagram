@@ -1,4 +1,4 @@
-import {numberToPercent} from './scale.js';
+import {convertNumberToPercent} from './scale.js';
 
 const DEFAULT = 'none';
 
@@ -9,7 +9,7 @@ const sliderContainerElement = modalElement.querySelector('.effect-level');
 const sliderElement = modalElement.querySelector('.effect-level__slider');
 const effectRadioButtons = modalElement.querySelectorAll('.effects__radio');
 
-const numberToPixel = (number) => `${number.toString()}px`;
+const convertNumberToPixel = (number) => `${number.toString()}px`;
 
 //показать/скрыть блок со слайдером
 const setVisibleEffectLevel = (type) => {
@@ -63,7 +63,6 @@ const getStepRange = (type) => {
   return stepRange;
 };
 
-
 //получить изменённый стиль фото
 const getStyleImageElement = (type, valueEffect) => {
   let style;
@@ -78,10 +77,10 @@ const getStyleImageElement = (type, valueEffect) => {
       style = `sepia(${valueEffect})`;
       break;
     case 'marvin':
-      style = `invert(${numberToPercent(valueEffect)})`;
+      style = `invert(${convertNumberToPercent(valueEffect)})`;
       break;
     case 'phobos':
-      style = `blur(${numberToPixel(valueEffect)})`;
+      style = `blur(${convertNumberToPixel(valueEffect)})`;
       break;
     case 'heat':
       style = `brightness(${valueEffect})`;
