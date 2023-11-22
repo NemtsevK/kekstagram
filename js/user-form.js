@@ -6,6 +6,11 @@ import {sendData} from './api.js';
 import {errorSendData} from './error-send-data.js';
 import {showSuccess} from './success.js';
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
 const body = document.querySelector('body');
 const imageUploadInput = document.querySelector('.img-upload__input');
 const modalUploadPhoto = document.querySelector('.img-upload__overlay');
@@ -20,11 +25,6 @@ const imageElement = uploadForm.querySelector('.img-upload__preview > img');
 const effectsPreview = uploadForm.querySelectorAll('.effects__preview');
 
 let urlPhoto = null;
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Публикую...'
-};
 
 //блокировка/разблокировка кнопки опубликовать
 const toggleSubmitButton = (disabled, text) => {
@@ -64,6 +64,16 @@ const resetFormData = () => {
   resetEditing();
 };
 
+//событие закрыть модальное окно по клику
+const onCloseUserModalClick = () => {
+  if (!modalUploadPhoto.classList.contains('hidden')) {
+    modalUploadPhoto.classList.add('hidden');
+    body.classList.remove('modal-open');
+    resetFormData();
+    URL.revokeObjectURL(urlPhoto);
+  }
+};
+
 //закрыть модальное окно
 const closeUserModal = () => {
   if (!modalUploadPhoto.classList.contains('hidden')) {
@@ -88,7 +98,7 @@ buttonScaleSmaller.addEventListener('click', onScaleSmallerClick);
 buttonScaleBigger.addEventListener('click', onScaleBiggerClick);
 
 //закрыть модальное окно по кнопке Закрыть
-buttonModalClose.addEventListener('click', closeUserModal);
+buttonModalClose.addEventListener('click', onCloseUserModalClick);
 document.addEventListener('keydown', onDocumentKeydown);
 
 pristine.addValidator(

@@ -12,16 +12,17 @@ const setErrorBlock = () => {
   return errorFragment.appendChild(errorElement);
 };
 
-//закрыть блок об ошибке
-const closeErrorModal = () => {
+//событие закрыть блок об ошибке по клику
+const onCloseErrorModalClick = () => {
   const errorBlock = body.querySelector('.error');
   hideElement(errorBlock);
 };
 
-//событие нажать esc
+//событие закрыть блок об ошибке по кнопке esc
 const onEscErrorKeydown = (event) => {
   if (isEscapeKey(event)) {
-    closeErrorModal();
+    const errorBlock = body.querySelector('.error');
+    hideElement(errorBlock);
     document.removeEventListener('keydown', onEscErrorKeydown);
   }
 };
@@ -32,11 +33,11 @@ const errorSendData = () => {
   body.appendChild(errorBlockFragment);
   const errorBlock = body.querySelector('.error');
   const errorButton = errorBlock.querySelector('.error__button');
-  errorButton.addEventListener('click', closeErrorModal);
+  errorButton.addEventListener('click', onCloseErrorModalClick);
 
   errorBlock.addEventListener('click', (event) => {
     if (event.target.classList.contains('error')) {
-      closeErrorModal();
+      hideElement(errorBlock);
     }
   });
 

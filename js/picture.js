@@ -1,13 +1,13 @@
 import {addClickEvent} from './user-modal.js';
 import {shuffleArray} from './util.js';
 
+const COUNT_RANDOM_PHOTOS = 10;
+
 const finalListPhotos = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const pictureLink = pictureTemplate.querySelector('.picture');
 const filterImages = document.querySelector('.img-filters');
 const filtersList = filterImages.querySelectorAll('.img-filters__button');
-
-const COUNT_RANDOM_PHOTOS = 10;
 
 //добавление данных во фрагмент
 const setPhotosFragment = (photos) => {
@@ -34,14 +34,14 @@ const removeAllPhotos = () => {
 const changeArrayPhotos = (photos, filterId) => {
   switch (filterId) {
     case 'filter-default':
-      photos.sort((a, b) => a.id - b.id);
+      photos.sort((current, next) => current.id - next.id);
       break;
     case 'filter-random':
       shuffleArray(photos);
       photos = photos.slice(0, COUNT_RANDOM_PHOTOS);
       break;
     case 'filter-discussed':
-      photos.sort((a, b) => b.comments.length - a.comments.length);
+      photos.sort((current, next) => next.comments.length - current.comments.length);
       break;
   }
   return photos;

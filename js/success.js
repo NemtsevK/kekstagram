@@ -12,17 +12,18 @@ const setSuccessBlock = () => {
   return successFragment.appendChild(successElement);
 };
 
-//закрыть блок об успешной отправке
-const closeSuccessModal = () => {
+//событие закрыть блок об успешной отправке по клику
+const onCloseSuccessModalClick = () => {
   const successBlock = body.querySelector('.success');
   hideElement(successBlock);
 };
 
-//событие нажать esc
-const keydownEscSuccess = (event) => {
+//событие закрыть блок об успешной отправке по кнопке esc
+const onSuccessEscKeydown = (event) => {
   if (isEscapeKey(event)) {
-    closeSuccessModal();
-    document.removeEventListener('keydown', keydownEscSuccess);
+    const successBlock = body.querySelector('.success');
+    hideElement(successBlock);
+    document.removeEventListener('keydown', onSuccessEscKeydown);
   }
 };
 
@@ -32,15 +33,15 @@ const showSuccess = () => {
   body.appendChild(successBlockFragment);
   const successBlock = body.querySelector('.success');
   const successButton = successBlock.querySelector('.success__button');
-  successButton.addEventListener('click', closeSuccessModal);
+  successButton.addEventListener('click', onCloseSuccessModalClick);
 
   successBlock.addEventListener('click', (event) => {
     if (event.target.classList.contains('success')) {
-      closeSuccessModal();
+      hideElement(successBlock);
     }
   });
 
-  document.addEventListener('keydown', keydownEscSuccess);
+  document.addEventListener('keydown', onSuccessEscKeydown);
 };
 
 export {showSuccess};
