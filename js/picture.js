@@ -1,5 +1,5 @@
 import {addClickEvent} from './user-modal.js';
-import {shuffleArray} from './util.js';
+import {shuffle} from './util.js';
 
 const COUNT_RANDOM_PHOTOS = 10;
 
@@ -37,7 +37,7 @@ const changeArrayPhotos = (photos, filterId) => {
       photos.sort((current, next) => current.id - next.id);
       break;
     case 'filter-random':
-      shuffleArray(photos);
+      shuffle(photos);
       photos = photos.slice(0, COUNT_RANDOM_PHOTOS);
       break;
     case 'filter-discussed':

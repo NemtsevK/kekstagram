@@ -2,15 +2,16 @@
 const isEscapeKey = (event) => event.key === 'Escape';
 
 //перемешать массив
-const shuffleArray = (array) => {
-  let j, temp;
-  for (let i = array.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = array[j];
-    array[j] = array[i];
-    array[i] = temp;
+const shuffle = (items) => {
+  let randomIndex;
+  let temporaryValue;
+  for (let i = items.length - 1; i > 0; i--) {
+    randomIndex = Math.floor(Math.random() * (i + 1));
+    temporaryValue = items[randomIndex];
+    items[randomIndex] = items[i];
+    items[i] = temporaryValue;
   }
-  return array;
+  return items;
 };
 
 function debounce(callback, timeoutDelay = 500) {
@@ -31,4 +32,4 @@ function debounce(callback, timeoutDelay = 500) {
   };
 }
 
-export {isEscapeKey, shuffleArray, debounce};
+export {isEscapeKey, shuffle, debounce};
