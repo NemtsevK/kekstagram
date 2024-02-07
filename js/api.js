@@ -1,7 +1,7 @@
 import {errorGetData} from './error-get-data.js';
 import {errorSendData} from './error-send-data.js';
 
-const BASE_URL = 'https://30.javascript.pages.academy/kekstagram';
+const BASE_URL = 'https://30.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
