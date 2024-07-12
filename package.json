@@ -1,13 +1,11 @@
 {
   "name": "kekstagram",
-  "version": "30.0.0",
+  "author": "Nemtsev Konstantin <nemtsevk@hotmail.com> (https://github.com/NemtsevK)",
+  "description": "Личный проект «Кекстаграм» ",
+  "homepage": "https://nemtsevk.github.io/kekstagram/",
+  "repository": "https://github.com/NemtsevK/kekstagram",
   "private": true,
-  "description": "Личный проект «Кекстаграм» от HTML Academy",
-  "type" : "module",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:htmlacademy-javascript/2329089-kekstagram-30.git"
-  },
+  "type": "module",
   "bugs": {
     "url": "https://github.com/htmlacademy-javascript/2329089-kekstagram-30/issues"
   },
@@ -22,7 +20,7 @@
     "lint": "eslint js/"
   },
   "engines": {
-    "node": "18",
-    "npm": "9"
+    "node": "^20.14.0",
+    "npm": "^10.7.0"
   }
 }
